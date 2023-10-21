@@ -1,0 +1,9 @@
+.container {
+    max-width: 600px;
+    margin: auto;
+    text-align: center;
+  }
+  
+  .hide {
+    display: none;
+  }
