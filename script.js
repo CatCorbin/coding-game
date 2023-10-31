@@ -70,6 +70,37 @@ document.addEventListener('DOMContentLoaded', function () {
         finalScoreDisplay.innerText = timer.textContent;
     }
 
+    function displayScores() {
+        // Clear existing content
+        const scoresContainer = document.createElement('div');
+        scoresContainer.classList.add('scores-container');
+        scoresContainer.innerHTML = '<h2>Previous Scores</h2>';
+        const scoresList = JSON.parse(localStorage.getItem('scoresList')) || [];
+        if (scoresList.length === 0) {
+            scoresContainer.innerHTML += '<p>No scores yet</p>';
+        } else {
+            const scoresListElement = document.createElement('ul');
+            scoresList.forEach((score, index) => {
+                const listItem = document.createElement('li');
+                listItem.innerText = `${score.initial} - ${score.score}`;
+                scoresListElement.appendChild(listItem);
+            });
+            scoresContainer.appendChild(scoresListElement);
+        }
+        endContainer.appendChild(scoresContainer);
+    }
+    
+    function endQuiz() {
+        clearInterval(setIntervalId);
+        questionContainer.classList.add('hide');
+        endContainer.classList.remove('hide');
+        // Display the final score
+        finalScoreDisplay.innerText = timer.textContent;
+        // Display the scores from local storage
+        displayScores();
+    }
+    
+
     function resetState() {
         while (answerButtons.length > 0) {
             answerButtons[0].classList.remove('hide');
